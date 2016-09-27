@@ -13,9 +13,8 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <base href="http://localhost/cas/">
-        <link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/styles.css" type="text/css">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/settings.css" media="screen" />
         <link rel="stylesheet" href="css/ddlevelsmenu-base.css">
         <link rel="stylesheet" href="css/ddlevelsmenu-topbar.css">
@@ -23,8 +22,25 @@
         <link rel="stylesheet" href="css/slider.css">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
-
         <link rel="shortcut icon" href="#">
+
+
+        <!-- JQUERY PLUGIN -->
+        <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+        <!-- FULLCALENDAR JQUERY PLUGIN -->
+        <link type="text/css" rel="stylesheet" href="css/fullcalendar.css">
+        <script type="text/javascript" src="js/fullcalendar/moment.min.js"></script>
+        <script type="text/javascript" src="js/fullcalendar/fullcalendar.js"></script>
+        <script type="text/javascript" src="js/fullcalendar/locale/fr.js"></script>
+        <script type="text/javascript" src="js/fullcalendar/locale/de.js"></script>
+        <script type="text/javascript" src="js/fullcalendar/locale/en-gb.js"></script>
+
+        <!-- DATATABLES -->
+
+        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+
     </head>
 	<body>
 

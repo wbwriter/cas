@@ -14,7 +14,7 @@ class Controller {
      * @param string $controller
      * @param string $method
      */
-    function Controller($controller, $method) {    		
+    function __construct($controller, $method) {
         $this->controller = $controller;
         $this->method = $method;        
     }
