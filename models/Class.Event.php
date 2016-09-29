@@ -183,7 +183,7 @@ class Event implements JsonSerializable
   EVENTS.maxParticipants,
   eventtypes.type,
   eventcategory.category,
-  difficulties.difficultyName,
+  difficulties.differenceName,
   users.firstname,
   users.lastname,
   users.mail,
