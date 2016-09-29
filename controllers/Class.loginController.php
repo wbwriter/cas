@@ -32,12 +32,44 @@ class loginController extends Controller{
 
     }
 
-    /**
-     * Method called by the change button from changepassword.php
-     */
 
 
 
+    function sendMail($destinationAddress,$destinationName,$subject,$message){
+        require_once 'dependencies/mailer/class.phpmailer.php';
+        require_once 'dependencies/mailer/class.smtp.php';
+
+        var_dump('trying to send mail');
+        $mail = new PHPMailer(true);
+
+        //Send mail using gmail
+
+        $mail->IsSMTP(); // telling the class to use SMTP
+        $mail->SMTPAuth = true; // enable SMTP authentication
+        $mail->SMTPDebug = 1; // debugging :1 = errors and messages, 2= messages only
+        $mail->SMTPSecure = "tls"; // sets the prefix to the servier
+        $mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
+        $mail->Port = 587; // set the SMTP port for the GMAIL server
+        $mail->Username = "casphphes@gmail.com"; // GMAIL username
+        $mail->Password = "qwertzuio"; // GMAIL password
+
+
+        //Typical mail data
+        $mail->AddAddress($destinationAddress, $destinationName);
+        $mail->SetFrom('casphphes@gmail.com');
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+
+        try{
+            $mail->Send();
+
+
+        } catch(Exception $e){
+            //Something went bad
+
+
+        }
+    }
 
 
     /**
@@ -143,6 +175,8 @@ class loginController extends Controller{
      * Method called by the form of the page newuser.php
      */
     function register(){
+
+
         //Get data posted by the form
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
@@ -180,11 +214,21 @@ class loginController extends Controller{
             else{
                 $_SESSION['msg'] = '<span class="success">Registration successful!</span>';
                 unset($_SESSION['persistence']);
+                $this->sendMail($mail,"$lname $fname",'Bienvenue sur le site du CAS','Ceci est un mail automatique pour vous informer de votre inscription au site.');
+
             }
         }
 
+
+
         $this->redirect('login', 'newuser');
     }
+
+
+
+
+
+
 
 
     /**
