@@ -36,7 +36,7 @@ class loginController extends Controller{
 
 
 
-    function sendMail($destinationAddress,$destinationName,$subject,$message){
+    function  sendMail($destinationAddress,$destinationName,$subject,$message){
         require_once 'dependencies/mailer/class.phpmailer.php';
         require_once 'dependencies/mailer/class.smtp.php';
 
@@ -82,13 +82,11 @@ class loginController extends Controller{
             $this->redirect('login', 'welcome');
             exit;
         }
-        $this->sendSms('XXXXXX','Salut monsieur X, ici c est Club alpin suisse. ca va?');
 
         /*dsda*/
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
         $this->vars['pageTitle'] = "Connection";
         $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
-
 
     }
 
@@ -219,6 +217,9 @@ class loginController extends Controller{
      * Method that controls the page 'newuser.php'
      */
     function newuser(){
+
+        $this->vars['pageTitle'] = "Créez votre compte";
+        $this->vars['pageMessage'] = "";
         //if a user is active he cannot re-register
         if($this->getActiveUser()){
             $this->redirect('login', 'welcome');
@@ -234,6 +235,8 @@ class loginController extends Controller{
      * Method called by the form of the page newuser.php
      */
     function register(){
+
+
         //Get data posted by the form
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
@@ -271,11 +274,21 @@ class loginController extends Controller{
             else{
                 $_SESSION['msg'] = '<span class="success">Registration successful!</span>';
                 unset($_SESSION['persistence']);
+                $this->sendMail($mail,"$lname $fname",'Bienvenue sur le site du CAS','Ceci est un mail automatique pour vous informer de votre inscription au site.');
+
             }
         }
 
+
+
         $this->redirect('login', 'newuser');
     }
+
+
+
+
+
+
 
 
     /**
