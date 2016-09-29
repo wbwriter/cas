@@ -1,32 +1,30 @@
 <?php
-class loginController extends Controller
-{
+class loginController extends Controller{
     /**
      * Method called by the form of the page login.php
      */
 
-    function connection()
-    {
+    function connection(){
         //Get data posted by the form
         $mail = $_POST['mail'];
         $pwd = $_POST['password'];
 
 
         //Check if data valid
-        if (empty($mail) or empty($pwd)) {
+        if(empty($mail) or empty($pwd)){
             $_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
-            $this->redirect('login');
-        } else {
+            $this->redirect( 'login');
+        }
+        else{
             //Load user from DB if exists
             $result = User::connect($mail, $pwd);
 
             //Put user in session if exists or return error msg
-            if (!$result) {
+            if(!$result){
                 $_SESSION['msg'] = '<span class="error">Username or password incorrect!</span>';
-                $this->redirect('login');
-
-            } else {
-
+                $this->redirect( 'login');
+            }
+            else{
                 $_SESSION['msg'] = '';
                 $_SESSION['user'] = $result;
                 $this->redirect('welcome');
@@ -34,6 +32,46 @@ class loginController extends Controller
         }
 
     }
+
+
+
+
+    function sendMail($destinationAddress,$destinationName,$subject,$message){
+        require_once 'dependencies/mailer/class.phpmailer.php';
+        require_once 'dependencies/mailer/class.smtp.php';
+
+        var_dump('trying to send mail');
+        $mail = new PHPMailer(true);
+
+        //Send mail using gmail
+
+        $mail->IsSMTP(); // telling the class to use SMTP
+        $mail->SMTPAuth = true; // enable SMTP authentication
+        $mail->SMTPDebug = 1; // debugging :1 = errors and messages, 2= messages only
+        $mail->SMTPSecure = "tls"; // sets the prefix to the servier
+        $mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
+        $mail->Port = 587; // set the SMTP port for the GMAIL server
+        $mail->Username = "casphphes@gmail.com"; // GMAIL username
+        $mail->Password = "qwertzuio"; // GMAIL password
+
+
+        //Typical mail data
+        $mail->AddAddress($destinationAddress, $destinationName);
+        $mail->SetFrom('casphphes@gmail.com');
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+
+        try{
+            $mail->Send();
+
+
+        } catch(Exception $e){
+            //Something went bad
+
+
+        }
+    }
+
 
     /**
      * Method that controls the page 'login.php'
@@ -46,6 +84,7 @@ class loginController extends Controller
         }
         $this->sendSms('XXXXXX','Salut monsieur X, ici c est Club alpin suisse. ca va?');
 
+        /*dsda*/
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
         $this->vars['pageTitle'] = "Connection";
         $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
@@ -159,7 +198,7 @@ class loginController extends Controller
 
                 $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 
-               $this->redirect('welcome');
+               $this->redirect( 'welcome');
             }
 
 
@@ -175,13 +214,11 @@ class loginController extends Controller
     }
 
 
+
     /**
      * Method that controls the page 'newuser.php'
      */
     function newuser(){
-
-        $this->vars['pageTitle'] = "Créez votre compte";
-        $this->vars['pageMessage'] = "";
         //if a user is active he cannot re-register
         if($this->getActiveUser()){
             $this->redirect('login', 'welcome');
@@ -197,8 +234,6 @@ class loginController extends Controller
      * Method called by the form of the page newuser.php
      */
     function register(){
-
-
         //Get data posted by the form
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
@@ -236,15 +271,12 @@ class loginController extends Controller
             else{
                 $_SESSION['msg'] = '<span class="success">Registration successful!</span>';
                 unset($_SESSION['persistence']);
-                $this->sendMail($mail,"$lname $fname",'Bienvenue sur le site du CAS','Ceci est un mail automatique pour vous informer de votre inscription au site.');
-
             }
         }
 
-
-
         $this->redirect('login', 'newuser');
     }
+
 
     /**
      * Method that controls the page 'welcome.php'
