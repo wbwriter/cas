@@ -20,7 +20,7 @@ include_once  'views/header.inc'; ?>
 	
 	.graphical{
 		width:	100%;
-		height:	400px; 
+		height:	300px; 
 		margin:	10px 0
 	}
 </style>
@@ -68,9 +68,13 @@ include_once  'views/header.inc'; ?>
 				<h2>Parcours</h2>
 				<input id="geocodeInput" type=text placeholder="Entrer un lieu"><button type="button" id="searchGeo" onclick="showAddress()">Go</button>
 
-				<p id="trailIndication" style="font-size:12px !important; opacity:0 !important">cliquez sur la carte pour dessiner le parcours</p>
+				<div id="trailIndication" style=" opacity:0 !important">
+					<p style="font-size:12px !important;">cliquez sur la carte pour dessiner le parcours</p>
+					<button type="button" onclick="removeLastPoint()">Suppr dernier point</button>
+					<button type="button" onclick="removeAllPoints()">Suppr tous les points</button>
+				</div>
 				<div id="map" class="graphical"></div>
-				<div id="chart" class="graphical"></div>
+				<div id="chart" class="graphical" style="height:150px;"></div>
 			</div>
 		</div>
 	</div>
@@ -156,6 +160,8 @@ include_once  'views/header.inc'; ?>
 		drawCoordinates();
 		if (trailPoints.length >= 2)
 			calculateElevation(getJSON(trailPoints));
+		
+		$('#trailIndication').css("opacity", "1");
 	}
 	
 	function getJSON(points){
@@ -200,6 +206,17 @@ include_once  'views/header.inc'; ?>
 			legend: 'none',
 			titleY: 'Altitude (m)'
 		});
+	}
+	
+	function removelastPoint(){
+		if(trailPoints.length > 0)
+			trailPoints.pop();
+		drawCoordinates();
+	}
+	
+	function removeallPoints(){
+		trailPoints = [];
+		drawCoordinates();
 	}
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfHSiXZQseH8j-pPHb9PiWwvGvpOUSDGw&callback=initMap"
