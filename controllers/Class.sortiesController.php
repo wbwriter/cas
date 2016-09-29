@@ -18,7 +18,6 @@ class sortiesController extends Controller{
     }
     function details(){
         // Get infos
-
         $result = Event::fetch_all_events();
 
         // Variables depuis BD
