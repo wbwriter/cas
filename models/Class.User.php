@@ -84,7 +84,71 @@ class User implements JsonSerializable {
 	public function setPassword($password){
 		$this->password = $password;
 	}
-	
+
+/*
+ * Creates the password change request for the user.
+ * 1.Generates a secret key by shuffling all characters and picking them in random, 30 char length.
+ * 2.Sha1 this secret key and stores it timed in the database.
+ * 3. Deletes any other change requests there would be for this user.
+ */
+
+    public function createPwdChangeRequest(){
+
+        $secretKey = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(30/strlen($x)) )),1,30);
+        $ultraSecretKey = sha1($secretKey);
+        $query ="DELETE from password_change_requests where fk_idUser ='$this->id'";
+        MySqlConn::getInstance()->executeQuery($query);
+
+        $query = "INSERT into password_change_requests(idRequest, Time, fk_idUser )
+         VALUES('$ultraSecretKey',now(),'$this->id')";
+          MySqlConn::getInstance()->executeQuery($query);
+        return $secretKey;
+
+    }
+
+    /*
+     * returns user id which corresponds to the given secret key in a 15 min timeplase
+     *
+     */
+    public static function getUserCorrespondingToSecretKey($secretKey){
+
+        $query = "Select * from password_change_requests where idRequest = sha1('$secretKey') AND now() BETWEEN Time and Time + INTERVAL 15 MINUTE ";
+        $result = MySqlConn::getInstance()->selectDB($query);
+        $idUser = $result->fetch();
+
+        return self::getUserFromId($idUser[2]);
+    }
+
+    /*
+     * Returns the user object corresponding to the mail
+     */
+	public static function getUserFromMail($mail){
+
+       $query = "Select * from users where mail ='$mail'";
+        $result = MySqlConn::getInstance()->selectDB($query);
+        $row = $result->fetch();
+        if(!$row) return null;
+
+        return new User($row['idUser'], $row['firstname'], $row['lastname'],
+            $row['mail'], $row['tel'],$row['fk_idUserTypes'], $row['pwd']);
+
+        return   MySqlConn::getInstance()->executeQuery($query);
+    }
+    /*
+     * Returns the user object corresponding to the id given
+     */
+    public static function getUserFromId($idUser){
+
+        $query = "Select * from users where idUser ='$idUser'";
+        $result = MySqlConn::getInstance()->selectDB($query);
+        $row = $result->fetch();
+
+
+        return new User($row['idUser'], $row['firstname'], $row['lastname'],
+            $row['mail'], $row['tel'],$row['fk_idUserTypes'], $row['pwd']);
+
+    }
+
 	public function save(){
 		$pwd = sha1($this->password);
 		$query = "INSERT into users( firstname, lastname, mail, tel, fk_idUserTypes, pwd)
