@@ -35,18 +35,17 @@ class loginController extends Controller{
 
 
 
-    function sendMail($destinationAddress,$destinationName,$subject,$message){
+    function  sendMail($destinationAddress,$destinationName,$subject,$message){
         require_once 'dependencies/mailer/class.phpmailer.php';
         require_once 'dependencies/mailer/class.smtp.php';
 
-        var_dump('trying to send mail');
+
         $mail = new PHPMailer(true);
 
         //Send mail using gmail
 
         $mail->IsSMTP(); // telling the class to use SMTP
         $mail->SMTPAuth = true; // enable SMTP authentication
-        $mail->SMTPDebug = 1; // debugging :1 = errors and messages, 2= messages only
         $mail->SMTPSecure = "tls"; // sets the prefix to the servier
         $mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
         $mail->Port = 587; // set the SMTP port for the GMAIL server
@@ -98,6 +97,23 @@ class loginController extends Controller{
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
         $this->vars['pageTitle'] = "Récupération de mot de passe";
         $this->vars['pageMessage'] = "";
+
+
+
+        if(!empty($_POST)){
+
+            try{
+                $this->sendMail($_POST['recoveryMail'],$_POST['recoveryMail'],'CAS password recovery','Ce message est la pour recuperer votre mdp');
+                $_SESSION['msg'] = '<span class="success">A recuperation email was sent to your address</span>';
+                $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
+            }catch(Exception $e){
+                $_SESSION['msg'] = '<span class="error">Failed to deliver</span>';
+                $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
+            }
+
+        }
+
+
 
     }
 
@@ -155,11 +171,13 @@ class loginController extends Controller{
     }
 
 
-
     /**
      * Method that controls the page 'newuser.php'
      */
     function newuser(){
+
+        $this->vars['pageTitle'] = "Créez votre compte";
+        $this->vars['pageMessage'] = "";
         //if a user is active he cannot re-register
         if($this->getActiveUser()){
             $this->redirect('login', 'welcome');
@@ -223,13 +241,6 @@ class loginController extends Controller{
 
         $this->redirect('login', 'newuser');
     }
-
-
-
-
-
-
-
 
     /**
      * Method that controls the page 'welcome.php'

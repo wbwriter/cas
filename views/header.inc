@@ -13,7 +13,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <base href="http://localhost/cas/">
-        <link rel="stylesheet" href="/<?php echo SITE_NAME; ?>/css/styles.css" type="text/css">
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/settings.css" media="screen" />
