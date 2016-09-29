@@ -18,12 +18,11 @@ class sortiesController extends Controller{
     }
     function details(){
         // Get infos
-        $result = Event::fetch_all_events();
-        // Get infos
 
         $result = Event::fetch_all_events();
+
         // Variables depuis BD
-
+        $title ="Tour de suisse";
         $description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
 
         $this->vars['title'] = $result[0]->getTitle();
@@ -49,28 +48,8 @@ class sortiesController extends Controller{
 
     }
 
-    function ajoutsortie()
-    {
-		$this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
-        $this->vars['pageTitle'] = "Ajouter une course";
-        $this->vars['pageMessage'] = "";
+    function ajoutsortie(){
 
-
-		if(!empty($_POST)){
-
-			$description = $_POST['description'];
-			$start_date = $_POST['startDate'].' '.$_POST['startTime'].':00';
-			$end_date = $_POST['endDate'].' '.$_POST['endTime'].':00';
-			$max_participants = $_POST['maxParticipants'];
-			$event_type = 1;
-			$owner = 1;//$_SESSION['user']->getId();
-			$title = $_POST['title'];
-			$event_cat = $_POST['category'];
-			$difficulty = $_POST['difficulty'];
-			$path = $_POST['JSON'];
-
-			$event = new Event($id = null, $description, $start_date, $end_date, $max_participants, $event_type, $owner, $title, $event_cat, $difficulty, $path);
-			$event->save();
-		}
+    }
 
 }
