@@ -9,7 +9,6 @@ class loginController extends Controller{
         $mail = $_POST['mail'];
         $pwd = $_POST['password'];
 
-
         //Check if data valid
         if(empty($mail) or empty($pwd)){
             $_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
@@ -33,6 +32,9 @@ class loginController extends Controller{
 
     }
 
+    /**
+     * Method called by the change button from changepassword.php
+     */
 
 
 
@@ -87,7 +89,6 @@ class loginController extends Controller{
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
         $this->vars['pageTitle'] = "Connection";
         $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
-
 
     }
 
@@ -197,7 +198,7 @@ class loginController extends Controller{
 
                 $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 
-               $this->redirect('welcome');
+               $this->redirect( 'welcome');
             }
 
 
