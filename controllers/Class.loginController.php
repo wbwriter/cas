@@ -88,6 +88,7 @@ class loginController extends Controller{
         $this->vars['pageTitle'] = "Connection";
         $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
 
+
     }
 
     /**
@@ -196,7 +197,7 @@ class loginController extends Controller{
 
                 $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
 
-               $this->redirect( 'welcome');
+               $this->redirect('welcome');
             }
 
 
