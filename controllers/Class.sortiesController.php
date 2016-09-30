@@ -31,7 +31,8 @@ class sortiesController extends Controller
 
     function ajoutsortie()
     {
-
+		//$event = new Event(POST)
+		//$event->Save();
     }
 
 }

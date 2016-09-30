@@ -1,3 +1,5 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <?php
 /**
  * Created by PhpStorm.
@@ -24,43 +26,59 @@ include_once  'views/header.inc'; ?>
 		margin:	10px 0
 	}
 </style>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-5 col-xs-1">
-			<form>
+			<form id="form" method="post" action="<?php echo URL_DIR.'sorties/ajoutsortie' ?>">
 				<div class="row">
 					<div class="col-md-6 formgroup">
-						<p>Titre de la randonnée</p>
-						<input name="title" type="text" required>
+						<p>Titre</p>
+						<input id="title" name="title" type="text" required style="width:100%">
 					</div>
 					<div class="col-md-6 formgroup">
 						<p>Personnes max</p>
-						<input name="maxParticipants" type="number" min="1" required style="width:50px">
+						<input id="maxParticipants" name="maxParticipants" type="number" min="1" required style="width:50px">
 					</div>
 				</div>
-				<div class="formgroup">
-					<p>Difficulté</p>
-					<select name="difficulty" required>
-						<option value="1">Débutant</option>
-						<option value="2">Modéré</option>
-						<option value="3">Avancé</option>
-						<option value="4">Très Avancé</option>
-						<option value="5">Professionnel</option>
-					</select>
+				<div class="row">
+					<div class="formgroup col-sm-6">
+						<p>Type</p>
+						<select id="type" name="type" required>
+							<option value="1">Marche</option>
+							<option value="2">Peau de Phoque</option>
+							<option value="3">Grimpe</option>
+							<option value="4">Raquettes</option>
+							<option value="5">Ski</option>
+							<option value="6">Snowboard</option>
+							<option value="7">Télémark</option>
+							<option value="7">Ski de fond</option>
+						</select>
+					</div>
+					<div class="formgroup col-sm-6">
+						<p>Difficulté</p>
+						<select id="difficulty" name="difficulty" required>
+							<option value="1">Débutant</option>
+							<option value="2">Modéré</option>
+							<option value="3">Avancé</option>
+							<option value="4">Très Avancé</option>
+							<option value="5">Professionnel</option>
+						</select>
+					</div>
 				</div>
 				<div class="formgroup">
 					<p>Date/Heure de début</p>
 					<input id="startDate" name="startDate" type="date" required> 
-					<input name="startTime" type="time" required>
+					<input id="startTime" type="time" autocomplete="off">
 				</div>
 				<div class="formgroup">
 					<p>Date/Heure de fin</p>
-					<input id="#endDate" name="endDate" type="date" required>
-					<input name="endTime" type="time">
+					<input id="endDate" name="endDate" type="date" required>
+					<input id="endTime" type="time" autocomplete="off">
 				</div>
 				<div class="formgroup">
 					<p>Description</p>
-					<textarea rows="6" cols="50" name="description"></textarea>
+					<textarea id="description" rows="6" cols="50" name="description"></textarea>
 				</div>
 		</div>
 		<div class="col-md-7 col-xs-10 text-center">
@@ -80,14 +98,18 @@ include_once  'views/header.inc'; ?>
 	</div>
 	<div class="row" style="margin-bottom:50px">
 		<div class="col-md-12 text-center">
-			<input type="submit">
+			<input id="form_json" name="JSON" type="hidden">
+			<button type="button" onclick="submit()">Ajouter</button>
 			</form>
 		</div>
 	</div>
 </div>
 
 <!-- Google Visualizations -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
 <script>
 	
 	var map = null;
@@ -96,6 +118,10 @@ include_once  'views/header.inc'; ?>
 	var trailPoints = [];
 	var trailShape = null;
 	var elevator = null;
+	var chart = null;
+	var form = $("#form");
+	form.validate();
+	
 	
 	function initMap() {
 		  
@@ -147,15 +173,20 @@ include_once  'views/header.inc'; ?>
 			strokeColor: '#FF0000',
 			map: map
 		});
-	}
-    
-	function clickMap(clickedPoint){
+		
 		if(addressMarker)
 			addressMarker.setMap(null);
 		addressMarker = new google.maps.Marker({
-							position: clickedPoint,
-							map: map
+			position: trailPoints[trailPoints.length-1],
+			map: map
 		});
+		
+		document.getElementById('form_json').value = JSON.stringify(trailPoints);
+		console.log(JSON.stringify(trailPoints));
+	}
+    
+	function clickMap(clickedPoint){
+		
 		trailPoints.push(clickedPoint);
 		drawCoordinates();
 		if (trailPoints.length >= 2)
@@ -193,7 +224,7 @@ include_once  'views/header.inc'; ?>
 			return;
 		}
 		
-		var chart = new google.visualization.LineChart(chartCanvas);
+		chart = new google.visualization.LineChart(chartCanvas);
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Sample');
 		data.addColumn('number', 'Altitude');
@@ -208,19 +239,33 @@ include_once  'views/header.inc'; ?>
 		});
 	}
 	
-	function removelastPoint(){
-		if(trailPoints.length > 0)
-			trailPoints.pop();
+	function removeLastPoint(){
+		trailPoints.pop();
 		drawCoordinates();
+		if (trailPoints.length >= 2)
+			calculateElevation(getJSON(trailPoints));
+		else
+			chart.clearChart();
 	}
 	
-	function removeallPoints(){
+	function removeAllPoints(){
 		trailPoints = [];
 		drawCoordinates();
+		chart.clearChart();
 	}
+	
+	function updateSecondDate(){
+		console.log($('#startDate').val());
+		var date = new Date($('#startDate').val())
+		console.log(date);
+		$('#endDate').val(date);
+	}
+	
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfHSiXZQseH8j-pPHb9PiWwvGvpOUSDGw&callback=initMap"
     async defer></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 
 <?php

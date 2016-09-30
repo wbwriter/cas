@@ -38,6 +38,18 @@ class Event implements JsonSerializable
     {
         return $this->id;
     }
+	
+	public function save(){
+		$query = "INSERT INTO paths(coordinatesJSON) VALUES('$this->path')";
+		$mysqli = MySqlConn::getInstance();
+		
+		$mysqli->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+		$mysql1->query($query);
+		$pathID = mysql_insert_id();
+		$query	= "INSERT INTO events(description, startDate, endDate, maxParticipants, fk_idEventType, fk_idOwner, title, fk_eventCategory, fk_idDifficulty, fk_idPath) VALUES('$this->description', '$this->start_date','$this->end_date','$this->max_participants','$this->event_type', '$this->owner','$this->title','$this->event_category')";
+		$mysqli->commit();
+		$mysqli.close();
+	}
 
     public function setId($id)
     {
