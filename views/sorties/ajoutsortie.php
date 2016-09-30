@@ -7,8 +7,12 @@
  * Date: 27/09/2016
  * Time: 08:48
  */
-
+$msg = $this->vars['msg'];
+$pageTitle = $this->vars['pageTitle'];
+$pageMessage = $this->vars['pageMessage'];
 include_once  'views/header.inc'; ?>
+
+
 <style>
 	.formgroup{
 		margin-top: 	10px;
@@ -43,8 +47,8 @@ include_once  'views/header.inc'; ?>
 				</div>
 				<div class="row">
 					<div class="formgroup col-sm-6">
-						<p>Type</p>
-						<select id="type" name="type" required>
+						<p>Catégorie</p>
+						<select id="category" name="category" required>
 							<option value="1">Marche</option>
 							<option value="2">Peau de Phoque</option>
 							<option value="3">Grimpe</option>
@@ -69,12 +73,12 @@ include_once  'views/header.inc'; ?>
 				<div class="formgroup">
 					<p>Date/Heure de début</p>
 					<input id="startDate" name="startDate" type="date" required> 
-					<input id="startTime" type="time" autocomplete="off">
+					<input id="startTime" name="startTime" type="time" autocomplete="off">
 				</div>
 				<div class="formgroup">
 					<p>Date/Heure de fin</p>
 					<input id="endDate" name="endDate" type="date" required>
-					<input id="endTime" type="time" autocomplete="off">
+					<input id="endTime" name="endTime" type="time" autocomplete="off">
 				</div>
 				<div class="formgroup">
 					<p>Description</p>
