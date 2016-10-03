@@ -35,6 +35,45 @@ class loginController extends Controller
 
     }
 
+
+
+
+    function  sendMail($destinationAddress,$destinationName,$subject,$message){
+        require_once 'dependencies/mailer/class.phpmailer.php';
+        require_once 'dependencies/mailer/class.smtp.php';
+
+
+        $mail = new PHPMailer(true);
+
+        //Send mail using gmail
+
+        $mail->IsSMTP(); // telling the class to use SMTP
+        $mail->SMTPAuth = true; // enable SMTP authentication
+        $mail->SMTPSecure = "tls"; // sets the prefix to the servier
+        $mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
+        $mail->Port = 587; // set the SMTP port for the GMAIL server
+        $mail->Username = "casphphes@gmail.com"; // GMAIL username
+        $mail->Password = "qwertzuio"; // GMAIL password
+
+
+        //Typical mail data
+        $mail->AddAddress($destinationAddress, $destinationName);
+        $mail->SetFrom('casphphes@gmail.com');
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+
+        try{
+            $mail->Send();
+
+
+        } catch(Exception $e){
+            //Something went bad
+
+
+        }
+    }
+
+
     /**
      * Method that controls the page 'login.php'
      */
@@ -46,6 +85,7 @@ class loginController extends Controller
         }
         $this->sendSms('XXXXXX','Salut monsieur X, ici c est Club alpin suisse. ca va?');
 
+        /*dsda*/
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
         $this->vars['pageTitle'] = "Connection";
         $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
@@ -175,6 +215,7 @@ class loginController extends Controller
     }
 
 
+
     /**
      * Method that controls the page 'newuser.php'
      */
@@ -245,6 +286,7 @@ class loginController extends Controller
 
         $this->redirect('login', 'newuser');
     }
+
 
     /**
      * Method that controls the page 'welcome.php'
