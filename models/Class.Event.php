@@ -40,17 +40,21 @@ class Event implements JsonSerializable
     }
 	
 	public function save(){		
+		$mysqlConnection = MySqlConn::getInstance();
+
+		$query = "INSERT INTO paths(coordinatesJSON) VALUES('$this->path')";
+		$mysqlConnection->executeQuery($query);
 		
-		$pathID = $this->savePath($this->path);
+		$query = "SELECT MAX(idPath) FROM paths";
+		$pathID = $mysqlConnection->executeQuery($query);
+		$mysqlConnection closeCursor();
+
+		echo '<br/>';		
+		var_dump($pathID);
+		echo '<br/>';
 		
 		$query	= "INSERT INTO events(description, startDate, endDate, maxParticipants, fk_idEventType, fk_idOwner, title, fk_idEventCategory, fk_idDifficulty, fk_idPath) VALUES('$this->description', '$this->start_date','$this->end_date','$this->max_participants','$this->event_type', '$this->owner','$this->title','$this->event_category', '$this->difficulty','$pathID')";
 		MySqlConn::getInstance()->executeQuery($query);
-	}
-	
-	private function savePath($path){
-		$mysqlConnection = MySqlConn::getInstance();
-		$query = "INSERT INTO paths(coordinatesJSON) VALUES('$this->path')";
-		return $mysqlConnection->insertAndGetID($query);
 	}
 
     public function setId($id)
