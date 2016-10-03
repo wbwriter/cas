@@ -67,4 +67,13 @@ class MySqlConn
         }
         return $result;
     }
+	
+	public function insertAndGetID($query){
+		$result = $this->_conn->exec($query);
+		$e = $this->_conn->errorInfo();
+		if ($e[1] != null) {
+			die(print_r($this->_conn->errorInfo(), true));
+		}
+		return $this->_conn->lastInsertID();
+	}
 }
