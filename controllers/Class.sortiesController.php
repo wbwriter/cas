@@ -69,7 +69,6 @@ class sortiesController extends Controller{
 			$path = $_POST['JSON'];
 			
 			$event = new Event($id = null, $description, $start_date, $end_date, $max_participants, $event_type, $owner, $title, $event_cat, $difficulty, $path);
-			var_dump($event);
 			$event->save();
 		}
 =======
