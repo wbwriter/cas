@@ -6,12 +6,20 @@
  * Time: 08:48
  */
 
+
+$msg = $this->vars['msg'];
+$pageTitle = $this->vars['pageTitle'];
+$pageMessage = $this->vars['pageMessage'];
+
+$title = $this->vars['title'];
+$description = $this->vars['description'];
+
 include_once  'views/header.inc'; ?>
 
     <div class="content">
         <div class="container">
             <div class="col-lg-6">
-                <h2 style="margin-top: 6px;">Titre rando</h2>
+                <h2 style="margin-top: 6px;"><?php if(isset($title)){ echo $title;} else { echo "No Data";};?></h2>
             </div>
             <div class="col-lg-6">
 
@@ -20,16 +28,16 @@ include_once  'views/header.inc'; ?>
             </div>
 
             <br>
+            <!-- Generate map -->
             <img class="center-block" src="http://placehold.it/1140x250">
             <div class="row features-two">
 
                 <div class="col-md-12 col-sm-12">
                     <div class="f-block bblue">
                         <a href="#"><i class="fa fa-briefcase"></i></a>
-                        <a href="#"><h3>La Randoooo</h3></a>
+                        <a href="#"><h3><?php if(isset($title)){ echo $title;} else { echo "No Data";};?></h3></a>
                         <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            027 / 000 00 00
+                            <?php if(isset($description)){ echo $description;} else { echo "No Data";};?>
                         </p>
                     </div>
                 </div>

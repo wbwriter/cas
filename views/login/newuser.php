@@ -1,8 +1,11 @@
-<?php include_once ROOT_DIR.'views/header.inc'; 
+<?php
 
 //Collect data from controller
 $msg = $this->vars['msg'];
+$pageTitle = $this->vars['pageTitle'];
+$pageMessage = $this->vars['pageMessage'];
 $persistence = $this->vars['persistence'];
+include_once ROOT_DIR.'views/header.inc';
 
 ?>
 <?php echo $msg;?>
