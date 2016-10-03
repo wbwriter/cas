@@ -47,7 +47,6 @@ class sortiesController extends Controller{
 
     }
 
-<<<<<<< HEAD
     function ajoutsortie()
     {
 		$this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
@@ -71,10 +70,5 @@ class sortiesController extends Controller{
 			$event = new Event($id = null, $description, $start_date, $end_date, $max_participants, $event_type, $owner, $title, $event_cat, $difficulty, $path);
 			$event->save();
 		}
-=======
-    function ajoutsortie(){
-
->>>>>>> origin/master
-    }
 
 }
