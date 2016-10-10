@@ -33,6 +33,7 @@ class Routing{
 	 * Redirect through controller and view
 	 */
 	public function route(){
+
 		//Read URL
 		$path = parse_url(
 				(isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' .

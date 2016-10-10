@@ -11,13 +11,13 @@
 
 						<h4>Contact</h4>
 
-						<p>Nullam justo nunc, dignissim at convallis posuere, sodales eu orci. </p>
+						<p>CAS MONTANA</p>
 						<hr />
-						<i class="fa fa-home"></i> &nbsp; 123, Some Area. Los Angeles, CA, 54321.
+						<i class="fa fa-home"></i> &nbsp; Crans-Montana
 						<hr />
-						<i class="fa fa-phone"></i> &nbsp; +239-3823-3434
+						<i class="fa fa-phone"></i> &nbsp; +41 27 000 00 00
 						<hr />
-						<i class="fa fa-envelope-o"></i> &nbsp; <a href="mailto:#">someone@company.com</a>
+						<i class="fa fa-envelope-o"></i> &nbsp; <a href="mailto:#">cas@casmontana.ch</a>
 						<hr />
 						<div class="social">
 							<a href="#" class="bblue"><i class="fa fa-facebook"></i></a>
@@ -33,14 +33,13 @@
 
 				<div class="col-md-3">
 					<div class="fwidget">
-						<h4>Categories</h4>
+						<h4>Pages</h4>
 						<ul>
-							<li><a href="#">Condimentum - Condimentum gravida</a></li>
-							<li><a href="#">Etiam at - Condimentum gravida</a></li>
-							<li><a href="#">Fusce vel - Condimentum gravida</a></li>
-							<li><a href="#">Vivamus - Condimentum gravida</a></li>
-							<li><a href="#">Pellentesque - Condimentum gravida</a></li>
-							<li><a href="#">Fusce vel - Condimentum gravida</a></li>
+							<li><a href="home">Home</a></li>
+							<li><a href="login">Login</a></li>
+							<li><a href="proximite">A proximité</a></li>
+							<li><a href="sorties">Sorties - Calendrier</a></li>
+							<li><a href="contact">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -48,7 +47,7 @@
 				<div class="col-md-3">
 					<div class="fwidget">
 
-						<h4>Subscribe</h4>
+						<h4>Newsletter</h4>
 						<p>Duis leo risus, condimentum ut posuere ac, vehicula luctus nunc.  Quisque rhoncus, a sodales enim arcu quis turpis.</p>
 						<p>Enter you email to Subscribe</p>
 
@@ -66,14 +65,10 @@
 
 				<div class="col-md-3">
 					<div class="fwidget">
-						<h4>Recent Posts</h4>
-						<ul>
-							<li><a href="#">Sed eu leo orci, condimentum gravida metus</a></li>
-							<li><a href="#">Etiam at nulla ipsum, in rhoncus purus</a></li>
-							<li><a href="#">Fusce vel magna faucibus felis dapibus facilisis</a></li>
-							<li><a href="#">Vivamus scelerisque dui in massa</a></li>
-							<li><a href="#">Pellentesque eget adipiscing dui semper</a></li>
-						</ul>
+						<h4>Devenez membre</h4>
+						<p>
+							Pour adhérer à notre section, veuillez remplir le formulaire d'adhésion en suivant le lien suivant:
+						</p>
 					</div>
 				</div>
 
@@ -82,7 +77,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="copy">
-					<p>Copyright &copy; <a href="#">Your Site</a> - <a href="index.html">Home</a> | <a href="aboutus.html">About Us</a> | <a href="faq.html">FAQ</a> | <a href="contactus.html">Contact Us</a></p>
+					<p>Copyright &copy; <a href="#">CASMONTANA</a></p>
 				</div>
 			</div>
 
@@ -90,6 +85,11 @@
 		<div class="clearfix"></div>
 	</div>
 </footer>
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 
 <!-- This page JS -->
 

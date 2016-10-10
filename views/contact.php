@@ -5,7 +5,7 @@
  * Date: 27.09.16
  * Time: 15:18
  */
-include_once ROOT_DIR . 'views/header.inc';
+include_once ROOT_DIR.'views/header.inc';
 ?>
 
     <section id="form_container" class="col-lg-12">

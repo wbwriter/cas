@@ -4,7 +4,7 @@
  * @author S. Martin
  * @link http://www.hevs.ch	
  */
-class Controller {	
+class Controller {
     protected $vars = array();
     protected $controller;
     protected $method;
@@ -14,13 +14,40 @@ class Controller {
      * @param string $controller
      * @param string $method
      */
-    function __construct($controller, $method) {
-        $this->vars['pageTitle'] = "CAS";
-        $this->vars['pageMessage'] = "Club Alpin Suisse";
-        $this->controller = $controller;
-        $this->method = $method;
+        function __construct($controller, $method) {
 
-    }
+            $this->vars['pageTitle'] = "CAS";
+            $this->vars['pageMessage'] = "Club Alpin Suisse";
+            $this->controller = $controller;
+            $this->method = $method;
+
+            if(isSet($_GET['lang']))
+            {
+                $clang = $_GET['lang'];
+
+    // register the session and set the cookie
+                $_SESSION['lang'] = $clang;
+                setcookie('lang', $clang, time() + (3600 * 24 * 30));
+            }
+            else if(isSet($_SESSION['lang']))
+            {
+                $clang = $_SESSION['lang'];
+            }
+            else if(isSet($_COOKIE['lang']))
+            {
+                $clang = $_COOKIE['lang'];
+            }
+            else
+            {
+                $clang = 'en';
+            }
+            $lang = "";
+            include ("lang/lang.$clang.php");
+
+            $this->lang = $lang;
+
+
+        }
     
     /**
      * Display view associated to a controller method
@@ -57,6 +84,24 @@ class Controller {
     		return false;
     }
 
+    function checkUser($userLevel, $redirectPage){
+        // Verify the user level and redirects if not
+        $user = $this->getActiveUser();
+        if(($user && $user->getMemberType() >= $userLevel) || $userLevel == 0){
+
+        } else {
+            $this->redirect($redirectPage);
+            exit;
+        }
+    }
+
+    function checkParam($param, $redirectPage){
+        // Verify if params are valid and redirects if not
+        if(!isset($param) || $param == ""){
+            $this->redirect($redirectPage);
+            exit;
+        }
+    }
 
 
     function sendMail($destinationAddress, $destinationName, $subject, $message)

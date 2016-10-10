@@ -1,30 +1,25 @@
 <?php include_once ROOT_DIR.'views/header.inc'; 
 ?>
 
-<style>	
-	.jumbotron{
-		margin-bottom: 0;
-		background: none;
-		color:aliceblue;
-	}
-	
-	.jumbotron h1, .jumbotron p{
-		text-shadow: 1px 1px 2px #000 !important;	
-	}
-	
+<style>
 	.carousel{
 		z-index: -99;
 		opacity: 0.8;
 	}
-	
-	.carousel-inner{
-		width:100%;
-		position: fixed;
+    .carousel-inner h2, .carousel-inner P{
+        background-color: rgba(247, 247, 247, 0.74902);
+
+        color: BLACK;
+    }
+
+	.carousel-inner h2{
+        font-size:50px;
+
 	}
 	
 	.carousel-inner img{
 		min-width: 100%;
-		margin-top: -20%;
+		margin-top: -40%;
 	}
 	
 </style>
@@ -44,26 +39,36 @@
     <div class="item active">
       <img class="img-responsive center-block" src="./img/img1.jpg" alt="Cabane">
       <div class="carousel-caption">
+          <h2 class="mytitle"><?php echo $lang['WELCOME_MESSAGE']; ?></h2>
+          <p><?php echo $lang['WEBSITE_NAME'] ,' , ', $lang['CAS_HOMETOWN']; ?></p>
       </div>
     </div>
     <div class="item">
       <img class="img-responsive center-block" src="./img/img2.jpg" alt="Alpinisme">
       <div class="carousel-caption">
+          <h2 class="mytitle"><?php echo $lang['WELCOME_MESSAGE']; ?></h2>
+          <p><?php echo $lang['WEBSITE_NAME'] ,' , ', $lang['CAS_HOMETOWN']; ?></p>
       </div>
     </div>
     <div class="item">
       <img class="img-responsive center-block" src="./img/img3.jpg" alt="Peau de Phoque">
       <div class="carousel-caption">
+          <h2 class="mytitle"><?php echo $lang['WELCOME_MESSAGE']; ?></h2>
+          <p><?php echo $lang['WEBSITE_NAME'] ,' , ', $lang['CAS_HOMETOWN']; ?></p>
       </div>
     </div>
 	  <div class="item">
       <img class="img-responsive center-block" src="./img/img4.jpg" alt="Peau de Phoque">
       <div class="carousel-caption">
+          <h2 class="mytitle"><?php echo $lang['WELCOME_MESSAGE']; ?></h2>
+          <p><?php echo $lang['WEBSITE_NAME'] ,' , ', $lang['CAS_HOMETOWN']; ?></p>
       </div>
     </div>
 	  <div class="item">
       <img class="img-responsive center-block" src="./img/img5.jpg" alt="Raquettes">
       <div class="carousel-caption">
+          <h2 class="mytitle"><?php echo $lang['WELCOME_MESSAGE']; ?></h2>
+          <p><?php echo $lang['WEBSITE_NAME'] ,' , ', $lang['CAS_HOMETOWN']; ?></p>
       </div>
     </div>
 	  
@@ -80,10 +85,6 @@
   </a>
 </div>
 
-<div class="jumbotron text-center">
-	<h1 class="mytitle">Bienvenue les cocos!</h1>
-	<p>Club Alpin Suisse, Crans-Montana</p>
-</div>
 
 
 <?php include_once ROOT_DIR.'views/footer.inc'; 

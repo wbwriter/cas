@@ -17,13 +17,13 @@ include_once ROOT_DIR.'views/header.inc';
 		<tr>
 			<td>
 				<?php echo $msg;?>
-				<h1>Se connecter</h1>
-				E-mail:<br><input type="text" name="mail" size="25"/><br>
-				Mot de passe:<br><input type="password" name="password" size="25"/><br><br>
-				<input class="btn btn-primary" type="submit" name="Submit" value="  OK  "/>
+				<h1><?php echo $lang['CONNECT_MENU_BUTTON']; ?></h1>
+				<?php echo $lang['EMAIL']; ?> :<br><input type="text" name="mail" size="25"/><br>
+				<?php echo $lang['PASSWORD']; ?> :<br><input type="password" name="password" size="25"/><br><br>
+				<input class="btn btn-primary" type="submit" name="Submit" value="<?php echo $lang['OK_BUTTON']; ?>"/>
 				<br/><br/>
-				Forgot password? ? <a href="<?php echo 'login/resetpassword';?>">(Reset password)</a><br>
-				Pas de compte ? <a href="<?php echo 'login/newuser';?>">(S'enregistrer)</a>
+				<?php echo $lang['FORGOT_PASSWORD']; ?> ? <a href="<?php echo 'login/resetpassword';?>">(<?php echo $lang['RESET_PASSWORD']; ?>)</a><br>
+				<?php echo $lang['NO_ACCOUNT']; ?> ? <a href="<?php echo 'login/newuser';?>">(<?php echo $lang['REGISTER']; ?>)</a>
 			</td>
 		</tr>
 	</table>

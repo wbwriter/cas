@@ -14,9 +14,9 @@ include_once ROOT_DIR.'views/header.inc';
         <tr>
             <td>
                 <?php echo $msg;?>
-                <h1>Récupération du mot de passe</h1>
-                E-mail:<br><input type="email" name="recoveryMail" size="25"/><br><br>
-                <input class="btn btn-primary" type="submit" name="Submit" value="  OK  "/>
+                <h1><?php echo $lang['PASSWORD_RECOVERY']; ?></h1>
+                <?php echo $lang['EMAIL']; ?> :<br><input type="email" name="recoveryMail" size="25"/><br><br>
+                <input class="btn btn-primary" type="submit" name="Submit" value="<?php echo $lang['OK_BUTTON']; ?>"/>
 
                 <br/><br/>
             </td>

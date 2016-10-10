@@ -9,12 +9,13 @@ class loginController extends Controller
     {
         //Get data posted by the form
         $mail = $_POST['mail'];
-        $pwd = $_POST['password'];
+         $pwd = $_POST['password'];
+        $lang = $this->lang;
 
 
         //Check if data valid
         if (empty($mail) or empty($pwd)) {
-            $_SESSION['msg'] = '<span class="error">A required field is empty!</span>';
+            $_SESSION['msg'] = '<span class="error">' . $lang['E_REQUIRED_FIELD_EMPTY'] . '</span>';
             $this->redirect('login');
         } else {
             //Load user from DB if exists
@@ -22,7 +23,7 @@ class loginController extends Controller
 
             //Put user in session if exists or return error msg
             if (!$result) {
-                $_SESSION['msg'] = '<span class="error">Username or password incorrect!</span>';
+                $_SESSION['msg'] = '<span class="error">' . $lang['E_USERNAME_PASSWORD_INCORRECT'] . '</span>';
                 $this->redirect('login');
 
             } else {
@@ -39,6 +40,7 @@ class loginController extends Controller
      * Method that controls the page 'login.php'
      */
     function login(){
+        $lang = $this->lang;
         //if a user is active he cannot re-login
         if($this->getActiveUser()){
             $this->redirect('login', 'welcome');
@@ -47,8 +49,8 @@ class loginController extends Controller
         $this->sendSms('XXXXXX','Salut monsieur X, ici c est Club alpin suisse. ca va?');
 
         $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
-        $this->vars['pageTitle'] = "Connection";
-        $this->vars['pageMessage'] = "Connectez vous pour vous inscrire aux évenements.";
+        $this->vars['pageTitle'] = $lang['CONNECT_MENU_BUTTON'];
+        $this->vars['pageMessage'] = $lang['LOGIN_TO_ACCESS_EVENTS'];
 
 
     }
@@ -74,9 +76,9 @@ class loginController extends Controller
         if(!empty($_POST)){
             $secretKey = user::getUserFromMail($_POST['recoveryMail'])->createPwdChangeRequest();
             try{
-                $messageContent = "Ce message est la pour recuperer votre mdp : \nSuivez ce lien :  http://localhost/cas/login/changepassword/$secretKey";
-                $this->sendMail($_POST['recoveryMail'],$_POST['recoveryMail'],'CAS password recovery',$messageContent);
-                $_SESSION['msg'] = '<span class="success">A recuperation email was sent to your address</span>';
+                $messageContent = $this->lang['MSG_TO_RECOVER_PASSWORD'] ."$secretKey";
+                $this->sendMail($_POST['recoveryMail'],$_POST['recoveryMail'],$this->lang['CAS_PWD_RECOVERY'],$messageContent);
+                $_SESSION['msg'] = '<span class="success">'. $this->lang['RECOVERY_MAIL_SENT'].'</span>';
                 $this->vars['msg'] = isset($_SESSION['msg']) ? $_SESSION['msg'] : '';
             }catch(Exception $e){
                 $_SESSION['msg'] = '<span class="error">Failed to deliver</span>';

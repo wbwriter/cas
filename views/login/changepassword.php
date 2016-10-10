@@ -11,10 +11,10 @@ include_once ROOT_DIR.'views/header.inc';
             <tr>
                 <td>
                     <?php echo $msg;?>
-                    <h1>Changement de mot de passe :</h1>
-                    Nouveau mot de passe:<br><input type="password" name="newPassword" size="25"/><br><br>
-                    Nouveau mot de passe:<br><input type="password" name="newPasswordConfirmation" size="25"/><br><br>
-                    <input class="btn btn-primary" type="submit" name="Submit" value="  Change  "/>
+                    <h1><?php echo $lang['PASSWORD_CHANGE']; ?> :</h1>
+                    <?php echo $lang['NEW_PASSWORD']; ?> :<br><input type="password" name="newPassword" size="25"/><br><br>
+                    <?php echo $lang['NEW_PASSWORD']; ?> :<br><input type="password" name="newPasswordConfirmation" size="25"/><br><br>
+                    <input class="btn btn-primary" type="submit" name="Submit" value="<?php echo $lang['CHANGE']; ?>"/>
 
                     <br/><br/>
                 </td>

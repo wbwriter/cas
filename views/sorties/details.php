@@ -30,7 +30,7 @@ $stationsFrom = $this->vars['stationsFrom'];
 $stationsTo = $this->vars['stationsTo'];
 $search = $this->vars['search'];
 $response = $this->vars['response'];
-
+$userLevel = $this->vars['userLevel'];
 
 
 
@@ -38,7 +38,6 @@ $response = $this->vars['response'];
 include_once 'views/header.inc'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <style>
-
         .graphical {
             width: 100%;
             height: 292px;
@@ -53,10 +52,14 @@ include_once 'views/header.inc'; ?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h1 style="margin-top: 6px;"><?php if (isset($title)) {echo $title;} else {echo "No Data";}; ?></h1>
+
                 </div>
                 <div class="col-lg-6">
-                    <a href="sorties/inscription/<?php if (isset($eventId)) {echo $eventId;}; ?>" class="btn btn-danger btn-large pull-right">Je veux participer <i class="fa fa-angle-double-right"></i></a>
+                    <?php if(isset($userLevel) && $userLevel >= 2 ){ ?>
+                            <a href="sorties/inscription/<?php if (isset($eventId)) {echo $eventId;}; ?>" class="btn btn-danger btn-large pull-right">Je veux participer <i class="fa fa-angle-double-right"></i></a>
+                    <?php } else { ?>
+                            <button data-toggle="tooltip" data-placement="top" title="Vous devez être membre pour vous inscrire" style="" class="btn btn-default btn-large pull-right">Je veux participer <i class="fa fa-angle-double-right"></i></button>
+                    <?php } ?>
                     <a href="#" data-toggle="modal" data-target="#itineraire" class="btn btn-info btn-large pull-right">Trouver itinéraire <i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
@@ -110,7 +113,16 @@ include_once 'views/header.inc'; ?>
                                 <a href="#"><h3><?php if (isset($title)) {echo $title;} else {echo "No Data";}; ?></h3></a>
                                 <p>
                                     <?php if (isset($description)) {echo $description;} else {echo "No Data";}; ?>
+
                                 </p>
+                                <div class="">
+                                    <?php if(isset($userLevel) && $userLevel >= 2 ){ ?>
+                                        <a href="sorties/inscription/<?php if (isset($eventId)) {echo $eventId;}; ?>" class="btn btn-danger btn-large pull-right">Je veux participer <i class="fa fa-angle-double-right"></i></a>
+                                    <?php } else { ?>
+                                        <button data-toggle="tooltip" data-placement="top" title="Vous devez être membre pour vous inscrire" style="" class="btn btn-default btn-large pull-right">Je veux participer <i class="fa fa-angle-double-right"></i></button>
+                                    <?php } ?>
+                                    <a href="#" data-toggle="modal" data-target="#itineraire" class="btn btn-info btn-large pull-right">Trouver itinéraire <i class="fa fa-angle-double-right"></i></a>
+                                </div>
                             </div>
                             <div class="col-md-3 f-block no-col-margin borange">
                                 <a href="#"><i class="fa fa-envelope"></i></a>
