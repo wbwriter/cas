@@ -28,6 +28,10 @@ $events_msg = $this->vars['user_events_msg'];
         $title = $e->getTitle();
         $description = $e->getDescription(); //For the tooltip
 
+        $startDate = $startDate->format('Y-m-d H:i:s');
+        $endDate = $endDate->format('Y-m-d H:i:s');
+
+
         echo "<tr><td>$startDate</td><td>$endDate</td><td>$status</td><td>$title</td></tr>";
     }
 

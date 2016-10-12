@@ -16,6 +16,20 @@
     background-color: #00A8FF;
 }
 
+#webcam_video_error
+{
+    padding-top: 5%;
+    height: 250px;
+    width: auto;
+    background-color : whitesmoke;
+}
+
+#webcam_video_error a
+{
+    text-decoration: underline;
+}
+
+
 #webcam_video_controls ul
 {
     display: inline-block;

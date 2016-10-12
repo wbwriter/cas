@@ -74,6 +74,16 @@ include_once ROOT_DIR.'views/header.inc';
                             Laisser un message audio-visuel
                         </button>
                     </div>
+                    <div id="webcam_video_error" style="display: none;">
+                        <div class="container col-md-12">
+                            <p><span id="ban_logo" style="font-size: 50px" class="fa fa-wrench"></span></p>
+                            <p>Oouups.. ! Seems like you have a shitty browser.</p>
+                            <p><a href="https://www.google.com/chrome/browser/desktop/" target="_blank">Download Google Chrome</a></p>
+                            <p><a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Download Firefox</a></p>
+
+                        </div>
+                    </div>
+
                     <div id="webcam_video_container" style="display: none;">
                         <video id="webcam_video"></video>
                         <div id="webcam_video_controls">
@@ -171,7 +181,11 @@ include_once ROOT_DIR.'views/header.inc';
             if (hasGetUserMedia()) {
                 console.log("Success : Webcam/micro are supported.");
             } else {
-                console.log("Error : Webcam/micro are not supported");
+                //Inform the user that the browser is not supported.
+
+                console.log("error : Webcam/micro not supported.");
+                display_error();
+                console.log("Error : Webcam/micro are not supported.");
             }
 
             var errorCallback = function (e) {
@@ -199,6 +213,12 @@ include_once ROOT_DIR.'views/header.inc';
                 //1. Append the video to message_audio_visuel
                 $('#webcam_video_container').show();
                 camera_on();
+            }
+
+            function display_error() {
+                //0. Remove the current content
+                $('#button_container').hide();
+                $('#webcam_video_error').show();
             }
 
             function start_recording() {
@@ -234,7 +254,6 @@ include_once ROOT_DIR.'views/header.inc';
                 mediaRecorder.ondataavailable = function (blob) {
 
                     blob_to_send = blob;
-                    alert(blob_to_send);
                     // POST/PUT "Blob" using FormData/XHR2
                     var blobURL = URL.createObjectURL(blob);
                     appendLink('' + blobURL + '');

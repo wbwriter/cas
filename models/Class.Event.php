@@ -19,8 +19,8 @@ class Event implements JsonSerializable
     {
         $this->setId($id);
         $this->setDescription($description);
-        $this->setStartDate($start_date);
-        $this->setEndDate($end_date);
+        $this->setStartDate($start_date->format('Y-m-d H:i:s'));
+        $this->setEndDate($end_date->format('Y-m-d H:i:s'));
         $this->setMaxParticipants($max_participants);
         $this->setEventType($event_type);
         $this->setOwner($owner);
@@ -38,20 +38,22 @@ class Event implements JsonSerializable
     {
         return $this->id;
     }
-	
-	public function save(){		
-		
-		$pathID = $this->savePath($this->path);
-		
-		$query	= "INSERT INTO events(description, startDate, endDate, maxParticipants, fk_idEventType, fk_idOwner, title, fk_idEventCategory, fk_idDifficulty, fk_idPath) VALUES('$this->description', '$this->start_date','$this->end_date','$this->max_participants','$this->event_type', '$this->owner','$this->title','$this->event_category', '$this->difficulty','$pathID')";
-		MySqlConn::getInstance()->executeQuery($query);
-	}
-	
-	private function savePath($path){
-		$mysqlConnection = MySqlConn::getInstance();
-		$query = "INSERT INTO paths(coordinatesJSON) VALUES('$this->path')";
-		return $mysqlConnection->insertAndGetID($query);
-	}
+
+    public function save()
+    {
+
+        $pathID = $this->savePath($this->path);
+
+        $query = "INSERT INTO events(description, startDate, endDate, maxParticipants, fk_idEventType, fk_idOwner, title, fk_idEventCategory, fk_idDifficulty, fk_idPath) VALUES('$this->description', '$this->start_date','$this->end_date','$this->max_participants','$this->event_type', '$this->owner','$this->title','$this->event_category', '$this->difficulty','$pathID')";
+        MySqlConn::getInstance()->executeQuery($query);
+    }
+
+    private function savePath($path)
+    {
+        $mysqlConnection = MySqlConn::getInstance();
+        $query = "INSERT INTO paths(coordinatesJSON) VALUES('$this->path')";
+        return $mysqlConnection->insertAndGetID($query);
+    }
 
     public function setId($id)
     {
@@ -204,23 +206,25 @@ WHERE
 
         $rows = $result->fetchAll();
 
-        foreach($rows as $r)
-        {
+        foreach ($rows as $r) {
             $owner = User::empty_construct();
             $owner->setFirstname($r['firstname']);
             $owner->setLastname($r['lastname']);
             $owner->setMail($r['mail']);
             $owner->setPhone($r['tel']);
 
-            $event = new Event($r['idEvent'], $r['description'], $r['startDate'], $r['endDate'], $r['maxParticipants'], $r['type'], $owner,$r['title'], $r['category'], $r['differenceName'], $r['coordinatesJSON']);
+            $event = new Event($r['idEvent'], $r['description'],  DateTime::createFromFormat('Y-m-d H:i:s', $r['startDate']), DateTime::createFromFormat('Y-m-d H:i:s', $r['endDate']), $r['maxParticipants'], $r['type'], $owner, $r['title'], $r['category'], $r['differenceName'], $r['coordinatesJSON']);
 
             //Add the event to the array
             array_push($events, $event);
         }
+
         return $events;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
+
         return array('id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
@@ -231,7 +235,18 @@ WHERE
             'event_type' => $this->event_type,
             'event_category' => $this->event_category,
             'difficulty' => $this->difficulty,
-            'path' => $this->path);
+            'path' => json_decode($this->path));
+    }
+
+    //TODO : implement this method
+    private function get_events($fk_idUser)
+    {
+        $events = array();
+
+        $query = "SELECT * FROM `eventusers` WHERE fk_idUser = $fk_idUser";
+
+        $result = MySqlConn::getInstance()->selectDB($query);
+        $rows = $result->fetchAll();
     }
 
 
@@ -260,17 +275,16 @@ WHERE
          * 6. description
          *'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''*/
 
-        foreach($rows as $r)
-        {
-            $e = new Event($r['idEvent'], $r['description'], $r['startDate'], $r['endDate'], null, null, null, $r['title'], null, null, null);
+        foreach ($rows as $r) {
+            $e = new Event($r['idEvent'], $r['description'], DateTime::createFromFormat('Y-m-d H:i:s', $r['startDate']), DateTime::createFromFormat('Y-m-d H:i:s', $r['endDate']), null, null, null, $r['title'], null, null, null);
             array_push($events, $e);
         }
         return $events;
     }
 
 
-   static function fetch_event_by_id($id){
-
+    static function fetch_event_by_id($id)
+    {
 
 
         $query = "SELECT
@@ -313,7 +327,7 @@ WHERE
         $owner->setMail($r['mail']);
         $owner->setPhone($r['tel']);
 
-        $event = new Event($r['idEvent'], $r['description'], $r['startDate'], $r['endDate'], $r['maxParticipants'], $r['type'], $owner,$r['title'], $r['category'], $r['differenceName'], $r['coordinatesJSON']);
+        $event = new Event($r['idEvent'], $r['description'], DateTime::createFromFormat('Y-m-d H:i:s', $r['startDate']), DateTime::createFromFormat('Y-m-d H:i:s', $r['endDate']), $r['maxParticipants'], $r['type'], $owner, $r['title'], $r['category'], $r['differenceName'], $r['coordinatesJSON']);
 
 
         return $event;
