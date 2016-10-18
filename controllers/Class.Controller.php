@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Parent class for every controllers classes
  * @author S. Martin
@@ -25,68 +26,63 @@ class Controller {
             {
                 $clang = $_GET['lang'];
 
-    // register the session and set the cookie
-                $_SESSION['lang'] = $clang;
-                setcookie('lang', $clang, time() + (3600 * 24 * 30));
-            }
-            else if(isSet($_SESSION['lang']))
-            {
-                $clang = $_SESSION['lang'];
-            }
-            else if(isSet($_COOKIE['lang']))
-            {
-                $clang = $_COOKIE['lang'];
-            }
-            else
-            {
-                $clang = 'en';
-            }
-            $lang = "";
-            include ("lang/lang.$clang.php");
-
-            $this->lang = $lang;
-
-
+            // register the session and set the cookie
+            $_SESSION['lang'] = $clang;
+            setcookie('lang', $clang, time() + (3600 * 24 * 30));
+        } else if (isSet($_SESSION['lang'])) {
+            $clang = $_SESSION['lang'];
+        } else if (isSet($_COOKIE['lang'])) {
+            $clang = $_COOKIE['lang'];
+        } else {
+            $clang = 'en';
         }
-    
+        $lang = "";
+        include("lang/lang.$clang.php");
+
+        $this->lang = $lang;
+    }
+
     /**
      * Display view associated to a controller method
      */
-    function display(){
-
-    	$view = "{$this->controller}/{$this->method}.php";
-        if(file_exists('views/'."{$this->method}.php")){
-            include 'views/'."{$this->method}.php";
-        } elseif(file_exists('views/'.$view)){
-            include 'views/'.$view;
+    function display()
+    {
+        $view = "{$this->controller}/{$this->method}.php";
+        if (file_exists('views/' . "{$this->method}.php")) {
+            include 'views/' . "{$this->method}.php";
+        } elseif (file_exists('views/' . $view)) {
+            include 'views/' . $view;
         }
-
     }
-    
+
     /**
      * URL redirection
      * @param string $controller
-     * @param string $method    
+     * @param string $method
      */
-    function redirect($controller, $method) {    	
-    	$url = "Location: " . URL_DIR. $controller . '/' .$method;    	
-    	header($url);
+    function redirect($controller, $method)
+    {
+        $url = "Location: " . URL_DIR . $controller . '/' . $method;
+        header($url);
     }
-    
+
     /**
      * Get active (logged-in) user
      * @return User
      */
-    function getActiveUser(){
-    	if(isset($_SESSION['user']))
-    		return $_SESSION['user'];
-    	else
-    		return false;
+    function getActiveUser()
+    {
+        if (isset($_SESSION['user']))
+            return $_SESSION['user'];
+        else
+            return false;
     }
 
-    function checkUser($userLevel, $redirectPage){
+    function checkUser($userLevel, $redirectPage)
+    {
         // Verify the user level and redirects if not
         $user = $this->getActiveUser();
+
         if(($user && $user->getMemberType() >= $userLevel) || $userLevel == 0){
             // Ajoute pour pouvoir vérifier si l'utilisateur a le LEVEL pour voir une partie d'une page
             return true;
@@ -114,9 +110,10 @@ class Controller {
 
     }
 
-    function checkParam($param, $redirectPage){
+    function checkParam($param, $redirectPage)
+    {
         // Verify if params are valid and redirects if not
-        if(!isset($param) || $param == ""){
+        if (!isset($param) || $param == "") {
             $this->redirect($redirectPage);
             exit;
         }
@@ -142,6 +139,7 @@ class Controller {
         $mail->Port = 587; // set the SMTP port for the GMAIL server
         $mail->Username = "casphphes@gmail.com"; // GMAIL username
         $mail->Password = "qwertzuio"; // GMAIL password
+        $mail->IsHtml(true);
 
 
         //Typical mail data
@@ -151,14 +149,13 @@ class Controller {
         $mail->Body = $message;
 
         //Attachment
-        if(isset($path_to_attachment_file) && file_exists($path_to_attachment_file)){
-        $mail->addAttachment($path_to_attachment_file);
+        if (isset($path_to_attachment_file) && file_exists($path_to_attachment_file)) {
+            $mail->addAttachment($path_to_attachment_file);
         }
 
-        if(file_exists($path_to_attachment_file))
-        {
+        if (file_exists($path_to_attachment_file)) {
             error_log("OK, file exists");
-        }else{
+        } else {
             error_log("file doesn't exist");
         }
 
@@ -169,7 +166,6 @@ class Controller {
             //Something went bad
         }
     }
-
 
 
     /*
@@ -235,5 +231,21 @@ class Controller {
             }
             curl_close($curl);
             */
+    }
+
+    /***
+     * This method gets an include file and returns it in as a string. It's intended for adding HTML to e-mails.
+     * @param $incfile : path for the included file to be returned as a variable.
+     * @param $subject : sujet du message  de type string.
+     * @param $message : message, de type string.
+     * @param $header_image : lien de l'image à inclure en tant qu'en-tête (optionnel).
+     * @param $signature : signature de l'administrateur (optionnel).
+     * @return string
+     */
+    protected function requireToVar($incfile, $subject, $message, $hashed_email)
+    {
+        ob_start();
+        require($incfile);
+        return ob_get_clean();
     }
 }

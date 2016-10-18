@@ -198,20 +198,11 @@ class sortiesController extends Controller{
         $this->vars['path'] = $result->getPath();
         $this->vars['description'] = $result->getDescription();
 
-		$_SESSION['difficulty'] = $result->getDifficulty();
-
-		if(isset($_POST['numPeople'])){
-			var_dump($_POST);
-		}
-
-
         $_SESSION['difficulty'] = $result->getDifficulty();
 
         if(isset($_POST['numPeople'])){
             var_dump($_POST);
         }
-
-
 
         $this->checkUser(2, "/error/http404");
     }

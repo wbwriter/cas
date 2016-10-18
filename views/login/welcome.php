@@ -8,7 +8,6 @@ $events = $this->vars['user_events']; //Declared in the controller
 $events_msg = $this->vars['user_events_msg'];
 include_once ROOT_DIR . 'views/header.inc';
 ?>
-
 <div class="content">
     <div class="container">
         <div class="row">
@@ -42,7 +41,7 @@ include_once ROOT_DIR . 'views/header.inc';
 
                 </table>
 
-                <?php if ($events_msg != 'rien'){
+                <?php if ($events_msg != 'rien') {
                     echo "<div id=\"message\" class=\"col-md-12\">
         <p> $events_msg  </p>
     </div>";
@@ -76,7 +75,6 @@ include_once ROOT_DIR . 'views/header.inc';
         </div>
     </div>
 </div>
-
 
 
 <?php
