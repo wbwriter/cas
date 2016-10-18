@@ -8,6 +8,40 @@ $events = $this->vars['user_events']; //Declared in the controller
 $events_msg = $this->vars['user_events_msg'];
 include_once ROOT_DIR . 'views/header.inc';
 ?>
+<<<<<<< HEAD
+<br><br>
+
+<section id="sorties_container" class="row col-lg-12">
+<h1><?php echo $lang['WELCOME_H1_LISTEVENTS']; ?></h1>
+    <table class="table table-striped col-lg-5">
+    <tr>
+        <th>Date start</th>
+        <th>Date end</th>
+        <th>Status</th>
+        <th>Title</th>
+    </tr>
+    <?php
+
+    foreach ($events as $e) {
+        $status = "Coming soon.."; //TODO : Add status in the DB
+        $startDate = $e->getStartDate();
+        $endDate = $e->getEndDate();
+        $title = $e->getTitle();
+        $description = $e->getDescription(); //For the tooltip
+
+        $startDate = $startDate->format('Y-m-d H:i:s');
+        $endDate = $endDate->format('Y-m-d H:i:s');
+        
+        echo "<tr><td>$startDate</td><td>$endDate</td><td>$status</td><td>$title</td></tr>";
+    }
+
+    ?>
+
+</table>
+	
+    <?php if ($events_msg != 'rien'){
+    echo "<div id=\"message\" class=\"col-md-12\">
+=======
 
 <div class="content">
     <div class="container">
@@ -44,6 +78,7 @@ include_once ROOT_DIR . 'views/header.inc';
 
                 <?php if ($events_msg != 'rien'){
                     echo "<div id=\"message\" class=\"col-md-12\">
+>>>>>>> origin/master
         <p> $events_msg  </p>
     </div>";
                 } ?>

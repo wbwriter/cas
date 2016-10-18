@@ -59,7 +59,6 @@ $lang = $this->lang;
         <link rel="stylesheet" type="text/css" href="<?php echo URL_DIR;?>/css/jquery.datetimepicker.css">
 		<script src="<?php echo URL_DIR;?>/js/jquery.datetimepicker.full.min.js"></script>
 
-
         <!-- FULLCALENDAR JQUERY PLUGIN -->
         <link type="text/css" rel="stylesheet" href="<?php echo URL_DIR;?>/css/fullcalendar.css">
 
@@ -78,6 +77,9 @@ $lang = $this->lang;
 
         <!-- ANNYANG -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
+
+        <!-- NEWSLETTER -->
+        <script type="text/javascript" src="js/newsletter.js"></script>
 
     </head>
 	<body>
