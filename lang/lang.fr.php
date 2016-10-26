@@ -136,6 +136,10 @@ $lang['TRAIL_DIFF_3'] = 'Avancé';
 $lang['TRAIL_DIFF_4'] = 'Tres Avancé';
 $lang['TRAIL_DIFF_5'] = 'Professionnel';
 
+//INSCRIPTION TO EVENT
+$lang['INSCRIPTION_NUMBER_PARTICIPANTS'] = "Entrez le nombre de participants";
+$lang['SEND'] = "Envoyer";
+
 //CONTACT CONTROLLER
 $lang['CONTACT_US'] = 'Contactez nous';
 $lang['LEAVE_VIDEO_MSG'] = "Laissez un message video";

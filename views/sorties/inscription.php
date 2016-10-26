@@ -31,8 +31,6 @@ include_once ROOT_DIR.'views/header.inc';
                     document.getElementById('inscriptionBlock').style.display = "block";
                 }
             }
-
-
         }
 		
 		
@@ -55,6 +53,7 @@ include_once ROOT_DIR.'views/header.inc';
 							C\'EST DUR!!!
 						</div>');
 			}
+
 		?>
     	<div class="content" style="display:block">
 			<div class="container">
@@ -63,9 +62,9 @@ include_once ROOT_DIR.'views/header.inc';
 					<div class="col-md-6 col-sm-6">
 						<div class="cwell">
 							<!-- Inscription form -->
-							<h3 class="title" id="participant1">Entrez le nombre de participants</h3>
+							<h3 class="title" id="participant"><?php echo $lang['INSCRIPTION_NUMBER_PARTICIPANTS']; ?></h3>
 							<input type="number" min="1" max="10" name="numParticipants" style="margin-right:20px">
-							<input type=submit class="btn btn-success">
+							<input type="submit"/>
 						</div>
 						
 					</div>
@@ -73,12 +72,6 @@ include_once ROOT_DIR.'views/header.inc';
 			</div>
 		</div>
     </form>
-    
-
-
-
-
-
 
 
 <?php
