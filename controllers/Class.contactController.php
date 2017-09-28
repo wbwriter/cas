@@ -53,7 +53,9 @@ class contactController extends Controller
 
         if(!file_exists("tmp"))
         {
-            mkdir("tmp", 0777, true);
+            if (!mkdir("tmp", 0777, true)) {
+                die('Echec lors de la création des répertoires...');
+            }
         }
 
         $date = new DateTime();
